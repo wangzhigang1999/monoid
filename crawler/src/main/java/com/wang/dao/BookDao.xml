@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.dao.BookDao">
+
+    <resultMap type="com.wang.pojo.Book" id="BookMap">
+        <result property="id" column="Id" jdbcType="INTEGER"/>
+        <result property="barcode" column="Barcode" jdbcType="VARCHAR"/>
+        <result property="name" column="Name" jdbcType="VARCHAR"/>
+        <result property="isbn" column="ISBN" jdbcType="VARCHAR"/>
+        <result property="classnumber" column="ClassNumber" jdbcType="VARCHAR"/>
+        <result property="indexnumber" column="indexNumber" jdbcType="VARCHAR"/>
+        <result property="writer" column="Writer" jdbcType="VARCHAR"/>
+        <result property="press" column="Press" jdbcType="VARCHAR"/>
+        <result property="pressingyear" column="PressingYear" jdbcType="INTEGER"/>
+        <result property="borrowingtimes" column="BorrowingTimes" jdbcType="INTEGER"/>
+        <result property="status" column="Status" jdbcType="INTEGER"/>
+        <result property="area" column="Area" jdbcType="VARCHAR"/>
+        <result property="defaultcomment" column="DefaultComment" jdbcType="VARCHAR"/>
+        <result property="department" column="Department" jdbcType="VARCHAR"/>
+        <result property="writerinfo" column="WriterInfo" jdbcType="VARCHAR"/>
+        <result property="html" column="Html" jdbcType="VARCHAR"/>
+        <result property="star" column="Star" jdbcType="INTEGER"/>
+        <result property="imglink" column="ImgLink" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BookMap">
+        select
+          Id, Barcode, Name, ISBN, ClassNumber, indexNumber, Writer, Press, PressingYear, BorrowingTimes, Status, Area, DefaultComment, Department, WriterInfo, Html, Star, ImgLink
+        from monoid.book
+        where Id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BookMap">
+        select
+          Id, Barcode, Name, ISBN, ClassNumber, indexNumber, Writer, Press, PressingYear, BorrowingTimes, Status, Area, DefaultComment, Department, WriterInfo, Html, Star, ImgLink
+        from monoid.book
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BookMap">
+        select
+        Id, Barcode, Name, ISBN, ClassNumber, indexNumber, Writer, Press, PressingYear, BorrowingTimes, Status, Area,
+        DefaultComment, Department, WriterInfo, Html, Star, ImgLink
+        from monoid.book
+        <where>
+            <if test="id != null">
+                and Id = #{id}
+            </if>
+            <if test="barcode != null and barcode != ''">
+                and Barcode = #{barcode}
+            </if>
+            <if test="name != null and name != ''">
+                and Name = #{name}
+            </if>
+            <if test="isbn != null and isbn != ''">
+                and ISBN = #{isbn}
+            </if>
+            <if test="classnumber != null and classnumber != ''">
+                and ClassNumber = #{classnumber}
+            </if>
+            <if test="indexnumber != null and indexnumber != ''">
+                and indexNumber = #{indexnumber}
+            </if>
+            <if test="writer != null and writer != ''">
+                and Writer = #{writer}
+            </if>
+            <if test="press != null and press != ''">
+                and Press = #{press}
+            </if>
+            <if test="pressingyear != null">
+                and PressingYear = #{pressingyear}
+            </if>
+            <if test="borrowingtimes != null">
+                and BorrowingTimes = #{borrowingtimes}
+            </if>
+            <if test="status != null">
+                and Status = #{status}
+            </if>
+            <if test="area != null and area != ''">
+                and Area = #{area}
+            </if>
+            <if test="defaultcomment != null and defaultcomment != ''">
+                and DefaultComment = #{defaultcomment}
+            </if>
+            <if test="department != null and department != ''">
+                and Department = #{department}
+            </if>
+            <if test="writerinfo != null and writerinfo != ''">
+                and WriterInfo = #{writerinfo}
+            </if>
+            <if test="html != null and html != ''">
+                and Html = #{html}
+            </if>
+            <if test="star != null">
+                and Star = #{star}
+            </if>
+            <if test="imglink != null and imglink != ''">
+                and ImgLink = #{imglink}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into monoid.book(Barcode, Name, ISBN, ClassNumber, indexNumber, Writer, Press, PressingYear, BorrowingTimes, Status, Area, DefaultComment, Department, WriterInfo, Html, Star, ImgLink)
+        values (#{barcode}, #{name}, #{isbn}, #{classnumber}, #{indexnumber}, #{writer}, #{press}, #{pressingyear}, #{borrowingtimes}, #{status}, #{area}, #{defaultcomment}, #{department}, #{writerinfo}, #{html}, #{star}, #{imglink})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into monoid.book(Barcode, Name, ISBN, ClassNumber, indexNumber, Writer, Press, PressingYear,
+        BorrowingTimes, Status, Area, DefaultComment, Department, WriterInfo, Html, Star, ImgLink)
+        values
+        <foreach collection="entities" item="com.wang.dao.entity" separator=",">
+            (#{entity.barcode}, #{entity.name}, #{entity.isbn}, #{entity.classnumber}, #{entity.indexnumber},
+            #{entity.writer}, #{entity.press}, #{entity.pressingyear}, #{entity.borrowingtimes}, #{entity.status},
+            #{entity.area}, #{entity.defaultcomment}, #{entity.department}, #{entity.writerinfo}, #{entity.html},
+            #{entity.star}, #{entity.imglink})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into monoid.book(Barcode, Name, ISBN, ClassNumber, indexNumber, Writer, Press, PressingYear,
+        BorrowingTimes, Status, Area, DefaultComment, Department, WriterInfo, Html, Star, ImgLink)
+        values
+        <foreach collection="entities" item="com.wang.dao.entity" separator=",">
+            (#{entity.barcode}, #{entity.name}, #{entity.isbn}, #{entity.classnumber}, #{entity.indexnumber},
+            #{entity.writer}, #{entity.press}, #{entity.pressingyear}, #{entity.borrowingtimes}, #{entity.status},
+            #{entity.area}, #{entity.defaultcomment}, #{entity.department}, #{entity.writerinfo}, #{entity.html},
+            #{entity.star}, #{entity.imglink})
+        </foreach>
+        on duplicate key update
+        Barcode = values(Barcode) , Name = values(Name) , ISBN = values(ISBN) , ClassNumber = values(ClassNumber) ,
+        indexNumber = values(indexNumber) , Writer = values(Writer) , Press = values(Press) , PressingYear =
+        values(PressingYear) , BorrowingTimes = values(BorrowingTimes) , Status = values(Status) , Area = values(Area) ,
+        DefaultComment = values(DefaultComment) , Department = values(Department) , WriterInfo = values(WriterInfo) ,
+        Html = values(Html) , Star = values(Star) , ImgLink = values(ImgLink)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update monoid.book
+        <set>
+            <if test="barcode != null and barcode != ''">
+                Barcode = #{barcode},
+            </if>
+            <if test="name != null and name != ''">
+                Name = #{name},
+            </if>
+            <if test="isbn != null and isbn != ''">
+                ISBN = #{isbn},
+            </if>
+            <if test="classnumber != null and classnumber != ''">
+                ClassNumber = #{classnumber},
+            </if>
+            <if test="indexnumber != null and indexnumber != ''">
+                indexNumber = #{indexnumber},
+            </if>
+            <if test="writer != null and writer != ''">
+                Writer = #{writer},
+            </if>
+            <if test="press != null and press != ''">
+                Press = #{press},
+            </if>
+            <if test="pressingyear != null">
+                PressingYear = #{pressingyear},
+            </if>
+            <if test="borrowingtimes != null">
+                BorrowingTimes = #{borrowingtimes},
+            </if>
+            <if test="status != null">
+                Status = #{status},
+            </if>
+            <if test="area != null and area != ''">
+                Area = #{area},
+            </if>
+            <if test="defaultcomment != null and defaultcomment != ''">
+                DefaultComment = #{defaultcomment},
+            </if>
+            <if test="department != null and department != ''">
+                Department = #{department},
+            </if>
+            <if test="writerinfo != null and writerinfo != ''">
+                WriterInfo = #{writerinfo},
+            </if>
+            <if test="html != null and html != ''">
+                Html = #{html},
+            </if>
+            <if test="star != null">
+                Star = #{star},
+            </if>
+            <if test="imglink != null and imglink != ''">
+                ImgLink = #{imglink},
+            </if>
+        </set>
+        where Id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from monoid.book where Id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Server" />
+        <module name="crawler" />
+        <module name="Selenium" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="crawler" target="14" />
+      <module name="monoid" target="14" />
+      <module name="Selenium" target="14" />
+      <module name="Server" target="14" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Selenium" options="-parameters" />
+      <module name="Server" options="-parameters" />
+      <module name="crawler" options="-parameters" />
+      <module name="monoid" options="" />
+    </option>
+  </component>
+</project>

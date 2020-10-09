@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.dao.BookinfoDao">
+
+    <resultMap type="com.wang.pojo.Bookinfo" id="BookinfoMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="href" column="href" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="writer" column="writer" jdbcType="VARCHAR"/>
+        <result property="press" column="press" jdbcType="VARCHAR"/>
+        <result property="pressyear" column="pressYear" jdbcType="VARCHAR"/>
+        <result property="isbn" column="isbn" jdbcType="VARCHAR"/>
+        <result property="star" column="star" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BookinfoMap">
+        select
+          id, href, name, writer, press, pressYear, isbn, star
+        from monoid.bookinfo
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BookinfoMap">
+        select
+          id, href, name, writer, press, pressYear, isbn, star
+        from monoid.bookinfo
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BookinfoMap">
+        select
+        id, href, name, writer, press, pressYear, isbn, star
+        from monoid.bookinfo
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="href != null and href != ''">
+                and href = #{href}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="writer != null and writer != ''">
+                and writer = #{writer}
+            </if>
+            <if test="press != null and press != ''">
+                and press = #{press}
+            </if>
+            <if test="pressyear != null and pressyear != ''">
+                and pressYear = #{pressyear}
+            </if>
+            <if test="isbn != null and isbn != ''">
+                and isbn = #{isbn}
+            </if>
+            <if test="star != null">
+                and star = #{star}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into monoid.bookinfo(href, name, writer, press, pressYear, isbn, star)
+        values (#{href}, #{name}, #{writer}, #{press}, #{pressyear}, #{isbn}, #{star})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into monoid.bookinfo(href, name, writer, press, pressYear, isbn, star)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.href}, #{entity.name}, #{entity.writer}, #{entity.press}, #{entity.pressyear}, #{entity.isbn},
+            #{entity.star})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into monoid.bookinfo(href, name, writer, press, pressYear, isbn, star)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.href}, #{entity.name}, #{entity.writer}, #{entity.press}, #{entity.pressyear}, #{entity.isbn},
+            #{entity.star})
+        </foreach>
+        on duplicate key update
+        href = values(href) , name = values(name) , writer = values(writer) , press = values(press) , pressYear =
+        values(pressYear) , isbn = values(isbn) , star = values(star)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update monoid.bookinfo
+        <set>
+            <if test="href != null and href != ''">
+                href = #{href},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="writer != null and writer != ''">
+                writer = #{writer},
+            </if>
+            <if test="press != null and press != ''">
+                press = #{press},
+            </if>
+            <if test="pressyear != null and pressyear != ''">
+                pressYear = #{pressyear},
+            </if>
+            <if test="isbn != null and isbn != ''">
+                isbn = #{isbn},
+            </if>
+            <if test="star != null">
+                star = #{star},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from monoid.bookinfo where id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,3 @@
+# Project exclude paths
+/crawler/target/
+/Selenium/target/
