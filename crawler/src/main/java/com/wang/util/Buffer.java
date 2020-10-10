@@ -45,7 +45,7 @@ public class Buffer {
         lock.writeLock().unlock();
     }
 
-    public boolean opened() {
+    public synchronized   boolean opened() {
         return queue != null;
     }
 }

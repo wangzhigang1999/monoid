@@ -3,7 +3,7 @@ package com.wang.worker;
 import com.wang.dao.BookinfoDao;
 import com.wang.pojo.Bookinfo;
 import com.wang.util.Buffer;
-import com.wang.util.MybatisUtils;
+import com.wang.util.SqlSessionUtil;
 import lombok.SneakyThrows;
 import org.apache.ibatis.session.SqlSession;
 
@@ -15,28 +15,29 @@ import java.util.concurrent.Executors;
  * @author wangz
  */
 public class Provider implements Runnable {
+
     private final Buffer buffer;
 
-    private  int threadNum;
+    private final int threadNum;
 
-    private int offset = 0;
+    private int offset = 3000;
 
     private final int limit = 500;
 
-    private final static int CNT = MybatisUtils.getSession().getMapper(BookinfoDao.class).getDataCnt();
+    private final static int CNT = SqlSessionUtil.getSession().getMapper(BookinfoDao.class).getDataCnt();
 
-    ExecutorService executorService ;
+    ExecutorService executorService;
 
-    public Provider(Buffer buffer,int threadNum) {
+    public Provider(Buffer buffer, int threadNum) {
         this.buffer = buffer;
-        this.threadNum =threadNum;
-      executorService  = Executors.newFixedThreadPool(threadNum);
+        this.threadNum = threadNum;
+        executorService = Executors.newFixedThreadPool(threadNum);
     }
 
     @Override
     @SneakyThrows
     public void run() {
-        SqlSession session = MybatisUtils.getSession();
+        SqlSession session = SqlSessionUtil.getSession();
 
         BookinfoDao mapper = session.getMapper(BookinfoDao.class);
 
@@ -46,6 +47,7 @@ public class Provider implements Runnable {
                 if (buffer.opened()) {
                     buffer.addBookInfo(bookinfo);
                 }
+
             }
         }
 
@@ -57,7 +59,7 @@ public class Provider implements Runnable {
 
     }
 
-    private synchronized int getOffset() {
+    private  int getOffset() {
         var res = offset;
 
         offset += limit;
@@ -71,7 +73,4 @@ public class Provider implements Runnable {
         }
     }
 
-    public void close() {
-        executorService.shutdown();
-    }
 }

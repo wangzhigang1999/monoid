@@ -13,7 +13,7 @@
         <result property="press" column="Press" jdbcType="VARCHAR"/>
         <result property="pressingyear" column="PressingYear" jdbcType="INTEGER"/>
         <result property="borrowingtimes" column="BorrowingTimes" jdbcType="INTEGER"/>
-        <result property="status" column="Status" jdbcType="INTEGER"/>
+        <result property="status" column="Status" jdbcType="VARCHAR"/>
         <result property="area" column="Area" jdbcType="VARCHAR"/>
         <result property="defaultcomment" column="DefaultComment" jdbcType="VARCHAR"/>
         <result property="department" column="Department" jdbcType="VARCHAR"/>
@@ -110,14 +110,14 @@
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into monoid.book(Barcode, Name, ISBN, ClassNumber, indexNumber, Writer, Press, PressingYear,
+        insert ignore into monoid.book(Barcode, Name, ISBN, ClassNumber, indexNumber, Writer, Press, PressingYear,
         BorrowingTimes, Status, Area, DefaultComment, Department, WriterInfo, Html, Star, ImgLink)
         values
-        <foreach collection="entities" item="com.wang.dao.entity" separator=",">
-            (#{entity.barcode}, #{entity.name}, #{entity.isbn}, #{entity.classnumber}, #{entity.indexnumber},
-            #{entity.writer}, #{entity.press}, #{entity.pressingyear}, #{entity.borrowingtimes}, #{entity.status},
-            #{entity.area}, #{entity.defaultcomment}, #{entity.department}, #{entity.writerinfo}, #{entity.html},
-            #{entity.star}, #{entity.imglink})
+        <foreach collection="list" item="item" separator=",">
+            (#{item.barcode}, #{item.name}, #{item.isbn}, #{item.classnumber}, #{item.indexnumber},
+            #{item.writer}, #{item.press}, #{item.pressingyear}, #{item.borrowingtimes}, #{item.status},
+            #{item.area}, #{item.defaultcomment}, #{item.department}, #{item.writerinfo}, #{item.html},
+            #{item.star}, #{item.imglink})
         </foreach>
     </insert>
 

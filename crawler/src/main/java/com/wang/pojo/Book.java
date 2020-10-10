@@ -1,10 +1,11 @@
 package com.wang.pojo;
 
 import lombok.AllArgsConstructor;
+import lombok.Cleanup;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
+import java.io.*;
 
 /**
  * (Book)实体类
@@ -15,7 +16,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Book implements Serializable {
+public class Book implements Serializable, Cloneable {
     private static final long serialVersionUID = 141519677285335089L;
 
     private Integer id;
@@ -38,7 +39,7 @@ public class Book implements Serializable {
 
     private Integer borrowingtimes;
 
-    private Integer status;
+    private String status;
 
     private String area;
 
@@ -54,5 +55,42 @@ public class Book implements Serializable {
 
     private String imglink;
 
+    public Book(Bookinfo bookinfo) {
+        this.name = bookinfo.getName();
+        this.isbn = bookinfo.getIsbn();
+        this.writer = bookinfo.getWriter();
+        this.press = bookinfo.getPress();
+        this.pressingyear = Integer.parseInt(bookinfo.getPressyear());
+        this.html = bookinfo.getHref();
+        this.press = bookinfo.getPress();
+        this.star = bookinfo.getStar();
+    }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        super.clone();
+
+        try {
+
+            //字节数组输出流
+            @Cleanup ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            //对象输出流
+            @Cleanup ObjectOutputStream oos = new ObjectOutputStream(bos);
+            //将这个对象写到对象输出流中
+
+            oos.writeObject(this);
+            //强制发送
+            oos.flush();
+
+            @Cleanup ByteArrayInputStream bin = new ByteArrayInputStream(bos.toByteArray());
+            @Cleanup ObjectInputStream ois = new ObjectInputStream(bin);
+
+            return ois.readObject();
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
 }

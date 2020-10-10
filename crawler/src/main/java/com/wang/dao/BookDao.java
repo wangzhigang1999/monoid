@@ -50,10 +50,10 @@ public interface BookDao {
     /**
      * 批量新增数据（MyBatis原生foreach方法）
      *
-     * @param entities List<Book> 实例对象列表
+     * @param list List<Book> 实例对象列表
      * @return 影响行数
      */
-    int insertBatch(@Param("entities") List<Book> entities);
+    int insertBatch(@Param("list") List<Book> list);
 
     /**
      * 批量新增或按主键更新数据（MyBatis原生foreach方法）

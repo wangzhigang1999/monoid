@@ -5,11 +5,11 @@ import com.wang.pojo.Bookinfo;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 
-class MybatisUtilsTest {
+class SqlSessionUtilTest {
     @Test
     public void utilTest() {
 
-        SqlSession session = MybatisUtils.getSession();
+        SqlSession session = SqlSessionUtil.getSession();
 
         var mapper = session.getMapper(BookinfoDao.class);
 

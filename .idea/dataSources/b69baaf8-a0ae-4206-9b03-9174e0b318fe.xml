@@ -923,7 +923,7 @@
     </column>
     <column id="289" parent="277" name="Status">
       <Position>11</Position>
-      <DataType>int|0s</DataType>
+      <DataType>varchar(255)|0s</DataType>
     </column>
     <column id="290" parent="277" name="Area">
       <Position>12</Position>
@@ -958,70 +958,79 @@
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="298" parent="277" name="PRIMARY">
+    <index id="298" parent="277" name="book_Barcode_uindex">
+      <ColNames>Barcode</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <key id="299" parent="277" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="299" parent="277" name="book_Id_uindex">
+    <key id="300" parent="277" name="book_Id_uindex">
       <ColNames>Id</ColNames>
       <UnderlyingIndexName>book_Id_uindex</UnderlyingIndexName>
     </key>
-    <column id="300" parent="278" name="id">
+    <key id="301" parent="277" name="book_Barcode_uindex">
+      <ColNames>Barcode</ColNames>
+      <UnderlyingIndexName>book_Barcode_uindex</UnderlyingIndexName>
+    </key>
+    <column id="302" parent="278" name="id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="301" parent="278" name="href">
+    <column id="303" parent="278" name="href">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="302" parent="278" name="name">
+    <column id="304" parent="278" name="name">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="303" parent="278" name="writer">
+    <column id="305" parent="278" name="writer">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="304" parent="278" name="press">
+    <column id="306" parent="278" name="press">
       <Position>5</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="305" parent="278" name="pressYear">
+    <column id="307" parent="278" name="pressYear">
       <Position>6</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="306" parent="278" name="isbn">
+    <column id="308" parent="278" name="isbn">
       <Position>7</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="307" parent="278" name="star">
+    <column id="309" parent="278" name="star">
       <Position>8</Position>
       <DataType>int|0s</DataType>
     </column>
-    <index id="308" parent="278" name="bookinfo_id_uindex">
+    <index id="310" parent="278" name="bookinfo_id_uindex">
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="309" parent="278" name="bookinfo_isbn_uindex">
+    <index id="311" parent="278" name="bookinfo_isbn_uindex">
       <ColNames>isbn</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="310" parent="278" name="PRIMARY">
+    <key id="312" parent="278" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="311" parent="278" name="bookinfo_id_uindex">
+    <key id="313" parent="278" name="bookinfo_id_uindex">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>bookinfo_id_uindex</UnderlyingIndexName>
     </key>
-    <key id="312" parent="278" name="bookinfo_isbn_uindex">
+    <key id="314" parent="278" name="bookinfo_isbn_uindex">
       <ColNames>isbn</ColNames>
       <UnderlyingIndexName>bookinfo_isbn_uindex</UnderlyingIndexName>
     </key>

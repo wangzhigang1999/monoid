@@ -5,9 +5,11 @@
 <configuration>
 
     <properties resource="db.properties"/>
+
     <typeAliases>
         <package name="com.wang.pojo"/>
     </typeAliases>
+
 
     <environments default="development">
         <environment id="development">
@@ -25,4 +27,6 @@
         <mapper resource="com/wang/dao/BookDao.xml"/>
         <mapper resource="com/wang/dao/BookinfoDao.xml"/>
     </mappers>
+
+
 </configuration>

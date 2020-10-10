@@ -11,7 +11,7 @@ import java.io.InputStream;
 /**
  * @author wangz
  */
-public class MybatisUtils {
+public class SqlSessionUtil {
     private static final SqlSessionFactory SQL_SESSION_FACTORY;
 
     static {
@@ -26,6 +26,6 @@ public class MybatisUtils {
     }
 
     public synchronized static SqlSession getSession() {
-        return SQL_SESSION_FACTORY.openSession();
+        return SQL_SESSION_FACTORY.openSession(true);
     }
 }

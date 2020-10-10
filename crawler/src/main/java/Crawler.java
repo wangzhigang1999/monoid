@@ -13,11 +13,11 @@ public class Crawler {
 
         Provider provider = new Provider(buffer,1);
 
-        Consumer consumer = new Consumer(buffer, 2);
+        Consumer consumer = new Consumer(buffer, 3);
 
         provider.start();
-        consumer.start();
 
+       consumer.start();
 
     }
 }
