@@ -77,12 +77,6 @@ public class Consumer implements Runnable {
     @SneakyThrows
     private List<Book> parse(Document document, Bookinfo info) {
 
-
-        if (info != null) {
-            throw new Exception("test  thread caller");
-
-        }
-
         List<Book> res = new ArrayList<>();
 
         Book baseBook = new Book(info);

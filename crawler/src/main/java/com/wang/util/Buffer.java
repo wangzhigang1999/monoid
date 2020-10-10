@@ -6,14 +6,11 @@ import lombok.SneakyThrows;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * @author wangz
  */
 public class Buffer {
-    ReadWriteLock lock = new ReentrantReadWriteLock();
     private BlockingQueue<Bookinfo> queue;
 
     public Buffer(int size) {
@@ -34,15 +31,13 @@ public class Buffer {
         }
     }
 
-    public  void close(boolean force) throws Exception {
-        lock.writeLock().lock();
+    public  synchronized void close(boolean force) throws Exception {
         if (!force) {
             while (!queue.isEmpty()) {
                 TimeUnit.SECONDS.sleep(1);
             }
         }
         queue = null;
-        lock.writeLock().unlock();
     }
 
     public synchronized   boolean opened() {
